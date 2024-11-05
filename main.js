@@ -18,11 +18,11 @@ async function getFile() {
   const fileData = await fileHandle.getFile();
   const text = await fileData.text();
 
-  subtitles = text.split("\n"); // Сохраняем строки файла для обработки
-  console.log("File content:", subtitles); // Проверка содержимого файла
+  subtitles = text.split("\n"); 
+  console.log("File content:", subtitles);
 }
 
-// Функция для добавления миллисекунд к времени
+
 function addMilliseconds(hours, minutes, seconds, milliseconds, amount) {
   milliseconds += amount;
   while (milliseconds >= 1000) {
@@ -40,7 +40,6 @@ function addMilliseconds(hours, minutes, seconds, milliseconds, amount) {
   return { hours, minutes, seconds, milliseconds };
 }
 
-// Функция для сдвига субтитров
 async function shiftSubtitles() {
   const shiftAmount = parseInt(document.getElementById("milliseconds").value);
 
@@ -53,7 +52,6 @@ async function shiftSubtitles() {
     if (subtitles[i].includes(" --> ")) {
       const [startTime, endTime] = subtitles[i].split(" --> ");
 
-      // Парсим начальное время
       let [startHours, startMinutes, startSeconds] = startTime.split(":");
       let [startSecs, startMillis] = startSeconds.split(",");
       startHours = parseInt(startHours);
@@ -61,7 +59,6 @@ async function shiftSubtitles() {
       startSecs = parseInt(startSecs);
       startMillis = parseInt(startMillis);
 
-      // Парсим конечное время
       let [endHours, endMinutes, endSeconds] = endTime.split(":");
       let [endSecs, endMillis] = endSeconds.split(",");
       endHours = parseInt(endHours);
@@ -69,11 +66,9 @@ async function shiftSubtitles() {
       endSecs = parseInt(endSecs);
       endMillis = parseInt(endMillis);
 
-      // Добавляем миллисекунды
       const newStartTime = addMilliseconds(startHours, startMinutes, startSecs, startMillis, shiftAmount);
       const newEndTime = addMilliseconds(endHours, endMinutes, endSecs, endMillis, shiftAmount);
 
-      // Форматируем время в нужном формате
       const formattedStart = `${String(newStartTime.hours).padStart(2, "0")}:${String(newStartTime.minutes).padStart(2, "0")}:${String(newStartTime.seconds).padStart(2, "0")},${String(newStartTime.milliseconds).padStart(3, "0")}`;
       const formattedEnd = `${String(newEndTime.hours).padStart(2, "0")}:${String(newEndTime.minutes).padStart(2, "0")}:${String(newEndTime.seconds).padStart(2, "0")},${String(newEndTime.milliseconds).padStart(3, "0")}`;
 
@@ -82,10 +77,9 @@ async function shiftSubtitles() {
   }
 
   const updatedContent = subtitles.join("\n");
-  await saveFile(updatedContent); // Сохраняем обновленные субтитры
+  await saveFile(updatedContent);
 }
 
-// Функция для сохранения файла
 async function saveFile(content) {
   const newHandle = await window.showSaveFilePicker({
     types: [
