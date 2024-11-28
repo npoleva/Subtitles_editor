@@ -1,0 +1,11 @@
+.container_for_buttons{
+    font-family: Arial, sans-serif; /* указание семейства шрифта Arial */
+    font-weight: bold; /* делает текст жирным */
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#getFile {
+    
+}
